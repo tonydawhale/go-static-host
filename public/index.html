@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>i.tonydoes.dev</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+			const formElement = document.getElementById('form')
+			const fileInputElement = document.getElementById('file-input')
+
+			fileInputElement.addEventListener('change', () => {
+				if (fileInputElement.files.length > 0) {
+					formElement.submit()
+				}
+			})
+		})
+    </script>
+</head>
+<body>
+    <div class="flex flex-col space-y-4 bg-sky-300 h-screen justify-center items-center select-none">
+        <div class="border-b-2 p-4 border-white text-center">
+            <h1 class="text-4xl font-bold font-mono text-white leading-tight">i.tonydoes.dev</h1>
+        </div>
+        <form method="post" enctype="multipart/form-data" action="/" id="form">
+            <label for="file-input" class="inline w-fit block my-0 mx-auto">
+                <span 
+                    class="bg-white hover:bg-zinc-200 text-black font-bold py-2 px-4 border-b-4 border-zinc-400 hover:border-zinc-300 rounded">Upload Asset
+                </span>
+            </label>
+            <input type="file" name="file-input" id="file-input" accept="image/*,video/*" hidden>
+        </form>
+        <footer class="bottom-full">Report images <a href="mailto:me@tonydoes.dev" class="text-white hover:text-zinc-100">here</a></footer>
+    </div>
+</body>
+</html>
