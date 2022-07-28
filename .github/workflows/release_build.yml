@@ -2,8 +2,8 @@ name: Release Project
 
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - "main"
 jobs:
   build:
     name: GoReleaser build
