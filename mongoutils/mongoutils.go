@@ -30,7 +30,7 @@ func Init() {
 	if err := MongoClient.Ping(context.TODO(), readpref.Primary()); err != nil {
 		panic(err)
 	}
-	log.Println("Successfully connected and pinged.")
+	log.Println("Successfully Connected To MongoDB")
 }
 
 func GetMongoClient() *mongo.Client {
