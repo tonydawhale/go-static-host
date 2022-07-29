@@ -24,7 +24,7 @@ jobs:
         run: go mod verify
 
       - name: Build
-        run: go build -v ./...
+        run: go build
 
       - name: test
         run: ls
@@ -32,7 +32,7 @@ jobs:
       - name: Move compiled go executable
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: go-static-host
+          local: go-static-host.exe
           remote: go-static-host
           host: ${{ secrets.HOST }}
           port: 22
