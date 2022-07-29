@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: '1.18.0'
+          cache: true
 
 
       - name: Build
@@ -32,4 +33,4 @@ jobs:
           host: ${{ secrets.HOST }}
           port: 22
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          password: ${{ secrets.PASSWORD }}`
