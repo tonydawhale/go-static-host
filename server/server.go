@@ -100,6 +100,7 @@ func getFile(c *gin.Context) {
 
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(rawObject.Body)
+	c.Header("Content-Type", data.ContentType)
 	c.Data(
 		http.StatusOK,
 		data.ContentType,  
