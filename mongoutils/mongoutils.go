@@ -44,7 +44,7 @@ func CreateItemMetaData(uuid string, shortId string, contentType string) (res *m
 	result, err := collection.InsertOne(context.TODO(), bson.D{
 		{Key: "uuid", Value: uuid},
 		{Key: "shortId", Value: shortId},
-		{Key: "content-type", Value: contentType},
+		{Key: "contentType", Value: contentType},
 	})
 
 	return result, err
