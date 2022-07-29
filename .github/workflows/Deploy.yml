@@ -26,6 +26,9 @@ jobs:
       - name: Build
         run: go build -v ./...
 
+      - name: test
+        run: ls
+
       - name: Move compiled go executable
         uses: garygrossgarten/github-action-scp@release
         with:
