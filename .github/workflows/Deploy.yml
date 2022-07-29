@@ -32,7 +32,7 @@ jobs:
       - name: Move compiled go executable
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: go-static-host.exe
+          local: go-static-host
           remote: go-static-host
           host: ${{ secrets.HOST }}
           port: 22
