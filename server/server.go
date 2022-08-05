@@ -21,6 +21,7 @@ func Init() {
 
 	r.GET("/", getIndex)
 	r.POST("/", postIndex)
+	r.POST("/api/upload", postApi)
 	r.GET("/favicon.ico", func (c *gin.Context) { c.Status(http.StatusAccepted) } )
 	r.GET("/:id", getFile)
 
@@ -74,6 +75,53 @@ func postIndex(c *gin.Context) {
 	}
 
 	c.Redirect(http.StatusFound, "/" + shortId)
+}
+
+func postApi(c *gin.Context) {
+	form, _ := c.MultipartForm()
+
+	file := form.File["file-input"][0]
+
+	extractedFile, err := file.Open()
+	
+	if (err != nil) {
+		log.Println(err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"success": false,
+			"message": "Error Uploading File",
+		})
+		return
+	}
+
+	newName := uuid.New().String()
+	shortId := util.GenerateId(7)
+
+	_, err = s3utils.UploadS3Object(newName, extractedFile)
+
+	if (err != nil) {
+		log.Println(err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"success": false,
+			"message": "Error Uploading File",
+		})
+		return
+	}
+
+	_, mongoErr := mongoutils.CreateItemMetaData(newName, shortId, file.Header.Get("content-type"))
+
+	if (mongoErr != nil) {
+		log.Println(mongoErr.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"success": false,
+			"message": "Error Uploading File",
+		})
+		return
+	}
+
+	c.JSON(http.StatusAccepted, gin.H{
+		"success": true,
+		"url": os.Getenv("URI") + "/" + shortId,
+	})
 }
 
 func getFile(c *gin.Context) {
