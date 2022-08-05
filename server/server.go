@@ -118,7 +118,8 @@ func postApi(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusAccepted, gin.H{
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.JSON(http.StatusCreated, gin.H{
 		"success": true,
 		"url": os.Getenv("URI") + "/" + shortId,
 	})
