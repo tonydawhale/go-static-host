@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"log"
+	"strings"
 
 	"go-static-host/s3utils"
 	"go-static-host/mongoutils"
@@ -37,6 +38,16 @@ func postIndex(c *gin.Context) {
 	form, _ := c.MultipartForm()
 
 	file := form.File["file-input"][0]
+
+	if (!(strings.HasPrefix(file.Header.Get("content-type"), "image/") && 
+		strings.HasPrefix(file.Header.Get("content-type"), "video/"))) {
+		log.Println("Someone has attempted to upload an invalid file type")
+		c.JSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"message": "Invalid file type",
+		})
+		return;
+	}
 
 	extractedFile, err := file.Open()
 	
@@ -81,6 +92,16 @@ func postApi(c *gin.Context) {
 	form, _ := c.MultipartForm()
 
 	file := form.File["file-input"][0]
+
+	if (!(strings.HasPrefix(file.Header.Get("content-type"), "image/") && 
+		strings.HasPrefix(file.Header.Get("content-type"), "video/"))) {
+		log.Println("Someone has attempted to upload an invalid file type")
+		c.JSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"message": "Invalid file type",
+		})
+		return;
+	}
 
 	extractedFile, err := file.Open()
 	
