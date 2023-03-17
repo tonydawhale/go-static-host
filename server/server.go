@@ -39,7 +39,7 @@ func postIndex(c *gin.Context) {
 
 	file := form.File["file-input"][0]
 
-	if (!(strings.HasPrefix(file.Header.Get("content-type"), "image/") && 
+	if (!(strings.HasPrefix(file.Header.Get("content-type"), "image/") ||
 		strings.HasPrefix(file.Header.Get("content-type"), "video/"))) {
 		log.Println("Someone has attempted to upload an invalid file type")
 		c.JSON(http.StatusBadRequest, gin.H{
